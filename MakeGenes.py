@@ -32,19 +32,19 @@ MAKEFILE_TEMPLATE = [
 ]
 
 
-def getDirList(path: str) -> List[Union[str, List]]:
-    dirList = []
-    if not os.path.isdir(path):
-        return path
-    for name in os.listdir(path):
-        if name == ".git":
-            continue
-        full_path = os.path.join(path, name)
-        if os.path.isdir(full_path):
-            dirList.append(getDirList(full_path))
-        else:
-            dirList.append(name)
-    return [os.path.basename(path)] + dirList
+# def getDirList(path: str) -> List[Union[str, List]]:
+#     dirList = []
+#     if not os.path.isdir(path):
+#         return path
+#     for name in os.listdir(path):
+#         if name == ".git":
+#             continue
+#         full_path = os.path.join(path, name)
+#         if os.path.isdir(full_path):
+#             dirList.append(getDirList(full_path))
+#         else:
+#             dirList.append(name)
+#     return [os.path.basename(path)] + dirList
 
 
 def writeSelector(field: dict) -> str:
@@ -83,7 +83,7 @@ def genMakefile():
         return genMakefile()
 
 
-dirList = getDirList("./")
-if not os.path.isfile(dirList[0] + "Makefile"):
-    genMakefile()
+dirList = os.walk('.')
 print(dirList)
+if not "Makefile" in dirList:
+    genMakefile()
